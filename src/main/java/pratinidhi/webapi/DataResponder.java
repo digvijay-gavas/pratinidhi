@@ -31,7 +31,7 @@ public class DataResponder {
     
     @GetMapping("/webapi/write")
     @ResponseBody
-    public ResponseEntity<byte[]> write(RequestEntity<byte[]> requestEntity) {
+    public ResponseEntity<byte[]> write(RequestEntity<byte[]> requestEntity) throws Exception {
     	Global.requestEntries.write(requestEntity);
         return new ResponseEntity<byte[]>(HttpStatus.OK);
     }
