@@ -1,5 +1,7 @@
 package pratinidhi.webapi;
 
+import java.util.Vector;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
@@ -16,6 +18,8 @@ public class DataResponder {
 	 * read next pipelined request object to serve 
 	 * 
 	 */
+	Vector<ResponseEntity<byte[]>> responseEntities=new Vector<ResponseEntity<byte[]>>();
+	Vector<RequestEntity<byte[]>> requestEntities=new Vector<RequestEntity<byte[]>>();
 
     @GetMapping("/webapi/read")
     @ResponseBody
@@ -29,6 +33,7 @@ public class DataResponder {
     @GetMapping("/webapi/write")
     @ResponseBody
     public ResponseEntity<byte[]> write(RequestEntity<byte[]> requestEntity) {
+    	requestEntities.add(requestEntity);
         return new ResponseEntity<byte[]>(HttpStatus.OK);
     }
 
