@@ -13,4 +13,9 @@ public class Pipeline<T> {
 	public void write(T t) {
 		ts.add(t);	
 	}
+	
+
+	public void print() {
+		System.out.println("size is "+ ts.size()+" "+ts.getClass().getTypeName());
+	}
 }
