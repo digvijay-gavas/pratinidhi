@@ -16,12 +16,12 @@ public class Pipeline<T> {
 		return t;		
 	}
 	
-	public void write(T t) throws Exception {
+	public void write(T t) {
 		ts.add(t);
 		//Global.router.wakeup();
-		for (Callable<Object> callable : postWriteHook) {
-			callable.call();
-		}
+		//for (Callable<Object> callable : postWriteHook) {
+			//callable.call();
+		//}
 		
 	}
 	
@@ -33,4 +33,5 @@ public class Pipeline<T> {
 	public void print() {
 		System.out.println("size is "+ ts.size()+" "+ts.getClass().getTypeName());
 	}
+
 }

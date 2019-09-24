@@ -2,6 +2,13 @@ package pratinidhi.socket;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import pratinidhi.runtime.Global;
 
 
 public class VirtualOutputStream extends OutputStream {
@@ -9,9 +16,11 @@ public class VirtualOutputStream extends OutputStream {
 	byte[] buffer = new byte[buffer_size];
 	int buffer_pointer=0;
 	String uid;
+	int port;
 	
-	public VirtualOutputStream(Object cloudDrive,String uid) {
+	public VirtualOutputStream(String uid,int port) {
 		this.uid=uid;
+		this.port=port;
 	}
 	
 	@Override
@@ -32,9 +41,12 @@ public class VirtualOutputStream extends OutputStream {
 	
 	@Override
 	public void flush() throws IOException {
-	
-		
-		//System.out.println("Flushed ");
+		HttpHeaders headers = new HttpHeaders();
+    	headers.add("port",""+port);
+    	headers.add("uid-0",uid);
+		ResponseEntity<byte[]> responseEntity=new ResponseEntity<byte[]>(Arrays.copyOfRange(buffer, 0, buffer_pointer), headers, HttpStatus.OK);
+		Global.responseEntries.write(responseEntity);
+
 	}
 
 }

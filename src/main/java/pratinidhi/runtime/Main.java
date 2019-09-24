@@ -6,6 +6,7 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 
 import pratinidhi.router.Router;
+import pratinidhi.socket.Server;
 
 public class Main {
 	public static void main(String[] args) throws FileNotFoundException, IOException {
@@ -14,5 +15,8 @@ public class Main {
 		//Global.router=new Router();
 		//Global.router.start();
 		//Config.save("C:\\Users\\49151\\Desktop\\work\\workspace\\config");
+		for (int i = 0; i < Config.ports.length; i++) {
+			Server.startListening(Config.ports[i]);
+		}
 	}
 }

@@ -11,10 +11,12 @@ public class VirtualInputStream extends InputStream {
 	int buffer_pointer=buffer_size-1;
 	
 	int available=0;
+	int port;
 	String uid;
 	
-	public VirtualInputStream(String uid) {
+	public VirtualInputStream(String uid, int port) {
 		this.uid=uid;
+		this.port=port;
 	}
 	
 	private void load() throws Exception {

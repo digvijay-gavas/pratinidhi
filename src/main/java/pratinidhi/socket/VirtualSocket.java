@@ -10,12 +10,13 @@ public class VirtualSocket extends Socket {
 	VirtualInputStream virtualInputStream;
 	VirtualOutputStream virtualOutputSteam;
 	String uid;
+	int port;
 	static String SERVER="SERVER";
 	static String CLIENT="CLIENT";
 	
-	public VirtualSocket(String uid,String type) {
-			virtualInputStream=new VirtualInputStream(uid);
-			virtualOutputSteam=new VirtualOutputStream("",uid);
+	public VirtualSocket(String uid,int port) {
+		virtualInputStream=new VirtualInputStream(uid,port);
+		virtualOutputSteam=new VirtualOutputStream(uid,port);
 	}
 
 	@Override
