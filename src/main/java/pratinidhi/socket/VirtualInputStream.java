@@ -22,7 +22,10 @@ public class VirtualInputStream extends InputStream {
 	private void load() throws Exception {
 		
 		//boolean isFileExistInDrive=false;
-		if(buffer_pointer>=(buffer_size-1)) {}
+		if(buffer_pointer>=(buffer_size-1)) 
+			synchronized (this) {
+				wait();
+			}
 			/*while(true)
 				if(cloudDrive.isFileExist(uid))
 				{

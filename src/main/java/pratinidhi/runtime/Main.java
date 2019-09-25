@@ -23,22 +23,35 @@ public class Main {
 			
 			@Override
 			public void run() {
-				System.out.println("waiting... "+System.currentTimeMillis());
+				System.out.println(System.currentTimeMillis()+"waiting... ");
 				try {
+					Thread.sleep(500);
+					System.out.println(System.currentTimeMillis()+"working1 .... ");
+					Thread.sleep(500);
+					System.out.println(System.currentTimeMillis()+"working2 .... ");
+					Thread.sleep(1000);
 					synchronized (this) {
 						wait();
 					}
 					
-					System.out.println("notified... "+System.currentTimeMillis());
+					System.out.println(System.currentTimeMillis()+"notified... ");
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
 			}
+			@Override
+			public String toString() {
+				System.out.println(System.currentTimeMillis()+"test..");
+				return super.toString();
+			}
+		
 		};
 		new Thread(runnable).start();
 		
+		Thread.sleep(1000);
+		runnable.toString();
 		Thread.sleep(1000);
 		synchronized (runnable) {
 			System.out.println();
