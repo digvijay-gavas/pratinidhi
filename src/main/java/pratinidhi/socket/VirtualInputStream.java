@@ -20,6 +20,7 @@ public class VirtualInputStream extends InputStream {
 	}
 	
 	private void load() throws Exception {
+		
 		//boolean isFileExistInDrive=false;
 		if(buffer_pointer>=(buffer_size-1)) {}
 			/*while(true)
@@ -62,14 +63,19 @@ public class VirtualInputStream extends InputStream {
 	
 	@Override
 	public int read(byte[] b, int off, int len) throws IOException {
+		// this need to be improved as if available is some N value and N<(len-off) 
+		//if(available<(len-off))
+		//	return -1;
+		int readlen=0;
 		for (int i = off; i < len; i++) {
 			if(available<=0)
 				return -1;
+			readlen++;
 			b[i]=buffer[buffer_pointer];
 			buffer_pointer++;
 			available--;
 		}
-		return len;
+		return readlen;
 	}
 	@Override
 	public int available() throws IOException {

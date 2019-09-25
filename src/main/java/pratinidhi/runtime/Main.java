@@ -4,19 +4,52 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Vector;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import pratinidhi.router.Router;
 import pratinidhi.socket.Server;
 
 public class Main {
-	public static void main(String[] args) throws FileNotFoundException, IOException {
+	public static void main(String[] args) throws FileNotFoundException, IOException, InterruptedException {
 		//System.out.println(Arrays.toString(Config.ports));
 		//int[] numbers = Arrays.stream("[5001, 7885, 6524]".replace('[', ' ').replace(']', ' ').replaceAll(" ", "").split(",")).mapToInt(Integer::parseInt).toArray(); 
 		//Global.router=new Router();
 		//Global.router.start();
 		//Config.save("C:\\Users\\49151\\Desktop\\work\\workspace\\config");
+		Runnable runnable
+		=new Runnable() {
+			
+			@Override
+			public void run() {
+				System.out.println("waiting... "+System.currentTimeMillis());
+				try {
+					synchronized (this) {
+						wait();
+					}
+					
+					System.out.println("notified... "+System.currentTimeMillis());
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		};
+		new Thread(runnable).start();
+		
+		Thread.sleep(1000);
+		synchronized (runnable) {
+			System.out.println();
+			runnable.notify();
+		}
+		
+		
+		ExecutorService executorService=Executors.newCachedThreadPool();
 		for (int i = 0; i < Config.ports.length; i++) {
-			Server.startListening(Config.ports[i]);
+			Global.servers.add(new Server(Config.ports[i]));
+			executorService.submit(Global.servers.lastElement());
 		}
 	}
 }
