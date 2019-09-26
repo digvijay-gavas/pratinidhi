@@ -25,7 +25,7 @@ public class Pipeline<T> {
 		
 	}
 	
-	public void addPostWriteHook(Callable<Object> callable) {
+	public void setPostWriteHook(Callable<Object> callable) {
 		postWriteHook.add(callable);
 	}
 	

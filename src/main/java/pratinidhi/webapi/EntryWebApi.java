@@ -31,8 +31,10 @@ public class EntryWebApi {
 				}
 				
 			}
-		}).start();
-		Global.responseEntries.addPostWriteHook(Global.router);
+		});//.start();
+		Global.router.setRequestPipeline(Global.requestEntries);
+		Global.router.setResponsePipeline(Global.responseEntries);;
+		
 		SpringApplication.run(EntryWebApi.class, args);
 	}
 }

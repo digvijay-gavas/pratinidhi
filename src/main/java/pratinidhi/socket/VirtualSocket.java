@@ -8,7 +8,7 @@ import java.net.Socket;
 
 public class VirtualSocket extends Socket {
 	VirtualInputStream virtualInputStream;
-	VirtualOutputStream virtualOutputSteam;
+	VirtualOutputStream virtualOutputStream;
 	String uid;
 	int port;
 	static String SERVER="SERVER";
@@ -16,17 +16,17 @@ public class VirtualSocket extends Socket {
 	
 	public VirtualSocket(String uid,int port) {
 		virtualInputStream=new VirtualInputStream(uid,port);
-		virtualOutputSteam=new VirtualOutputStream(uid,port);
+		virtualOutputStream=new VirtualOutputStream(uid,port);
 	}
 
 	@Override
-	public InputStream getInputStream() throws IOException {
+	public VirtualInputStream getInputStream() throws IOException {
 		return virtualInputStream;
 	}
 	
 	@Override
-	public OutputStream getOutputStream() throws IOException {
-		return virtualOutputSteam;
+	public VirtualOutputStream getOutputStream() throws IOException {
+		return virtualOutputStream;
 	}
 	
 	@Override

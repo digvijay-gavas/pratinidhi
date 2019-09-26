@@ -85,4 +85,9 @@ public class VirtualInputStream extends InputStream {
 		return available;
 	}
 
+	public void write(byte[] body) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

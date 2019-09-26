@@ -2,37 +2,37 @@ package pratinidhi.router;
 
 import java.util.concurrent.Callable;
 
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
+
 import pratinidhi.runtime.Global;
 
-public class Router implements Callable<Object> {
-
-
-
-	@Override
-	public Object call() throws Exception {
-		new Thread(new Runnable() {
+public class Router {
+	
+	public void setResponsePipeline(Pipeline<ResponseEntity<byte[]>> pipeline) {
+		
+		pipeline.setPostWriteHook(new Callable<Object>() {
 			
 			@Override
-			public void run() {
-				Global.requestEntries.read();
+			public Object call() throws Exception {
 				
+				return null;
 			}
-		}).start();
-
-		return null;
+		});
+		
 	}
-
-	public void start() {
-		new Thread(new Runnable() {
+	
+	public void setRequestPipeline(Pipeline<RequestEntity<byte[]>> pipeline) {
+		
+		pipeline.setPostWriteHook(new Callable<Object>() {
 			
 			@Override
-			public void run() {
-
-
-				
+			public Object call() throws Exception {
+				RequestEntity<byte[]> requestEntity=pipeline.read();
+				Global.virtualSockets.get(requestEntity.getHeaders().get("uid").get(0)).getInputStream().write(requestEntity.getBody());
+				return null;
 			}
-		}).start();
+		});
 	}
-
 	
 }
